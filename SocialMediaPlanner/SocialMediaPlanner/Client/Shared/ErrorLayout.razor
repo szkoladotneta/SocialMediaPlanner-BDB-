@@ -1,0 +1,13 @@
+﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.WebAssembly.Hosting
+@inject IWebAssemblyHostEnvironment HostEnvironment
+
+<div class="page">
+    <main>
+        <h1>Environment: @HostEnvironment.Environment</h1>
+        <article class="content px-4">
+            @Body
+        </article>
+        <a href="/">Return to home page</a>
+    </main>
+</div>
