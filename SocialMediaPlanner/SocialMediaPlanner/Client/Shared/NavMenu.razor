@@ -1,0 +1,115 @@
+﻿  <!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+        <img src="dist/img/AdminLTELogo.png" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">AdminLTE 3</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="image">
+                <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+            </div>
+            <div class="info">
+                <a href="#" class="d-block">Kajetan Duszyński</a>
+            </div>
+        </div>
+
+        <!-- SidebarSearch Form -->
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                                     <li class="nav-item">
+                    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                        <i class="nav-icon far fa-home"></i>
+                        <p>
+                            Home Page
+                        </p>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink class="nav-link" href="calendar">
+                        <i class="nav-icon far fa-calendar-alt"></i>
+                        <p>
+                            Calendar
+                        </p>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="accounts" class="nav-link">
+                        <i class="nav-icon far fa-image"></i>
+                        <p>
+                            Accounts
+                        </p>
+                    </NavLink>
+                </li>
+                <li class="nav-item">
+                    <NavLink href="posts" class="nav-link">
+                        <i class="nav-icon fas fa-columns"></i>
+                        <p>
+                            Posts
+                        </p>
+                    </NavLink>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+</aside>
+
+@*<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+    <a class="navbar-brand" href="">SocialMediaPlanner</a>
+    <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    </div>
+    </div>
+
+    <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
+    <nav class="flex-column">
+    <div class="nav-item px-3">
+    <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+    <span class="oi oi-home" aria-hidden="true"></span> Home
+    </NavLink>
+    </div>
+    <div class="nav-item px-3">
+    <NavLink class="nav-link" href="counter" Match="NavLinkMatch.All">
+    <span class="oi oi-plus" aria-hidden="true"></span> Counter
+    </NavLink>
+    </div>
+    <div class="nav-item px-3">
+    <NavLink class="nav-link" href="fetchdata">
+    <span class="oi oi-list-rich" aria-hidden="true"></span> Fetch data
+    </NavLink>
+    </div>
+    </nav>
+    </div>*@
+
+@code {
+    private bool collapseNavMenu = true;
+
+    private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+
+    private void ToggleNavMenu()
+    {
+        collapseNavMenu = !collapseNavMenu;
+    }
+}
