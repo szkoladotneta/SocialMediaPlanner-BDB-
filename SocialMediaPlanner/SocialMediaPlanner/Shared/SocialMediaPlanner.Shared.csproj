@@ -15,4 +15,8 @@
     <Folder Include="Calendar\Queries\" />
     <Folder Include="Common\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="10.4.0" />
+  </ItemGroup>
 </Project>
