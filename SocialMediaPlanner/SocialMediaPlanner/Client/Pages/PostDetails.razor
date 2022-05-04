@@ -1,0 +1,37 @@
+﻿@page "/posts/{id:int}"
+
+<PageTitle>Social Media Planner Homepage</PageTitle>
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">Dashboard</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item active"><a href="#">Home</a></li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <h1>This is an example text: @Example for Id: @Id</h1>
+            <!-- /.row -->
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public string Example { get; set; }
+}

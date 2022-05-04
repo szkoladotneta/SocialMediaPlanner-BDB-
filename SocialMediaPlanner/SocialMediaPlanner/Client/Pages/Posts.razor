@@ -1,4 +1,6 @@
 ﻿@page "/posts"
+
+@using SocialMediaPlanner.Client.Shared.Templates
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -40,87 +42,80 @@ else
                 </div>
             </div>
             <div class="card-body p-0">
-                <table class="table table-striped projects">
-                    <thead>
-                        <tr>
-                            <th style="width: 1%">
-                                #
-                            </th>
-                            <th style="width: 20%">
-                                Title
-                            </th>
-                            <th style="width: 30%">
-                                Accounts
-                            </th>
-                            <th>
-                                Scheduled Date
-                            </th>
-                            <th style="width: 8%" class="text-center">
-                                Status
-                            </th>
-                            <th style="width: 20%">
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in PostList)
-                        {
-                            <tr>
-                                <td>
-                                    #
-                                </td>
-                                <td>
-                                    <a>
-                                        @item.Title
-                                    </a>
-                                    <br />
-                                    <small>
-                                        Created @item.CreateDate.Value.ToShortDateString()
-                                    </small>
-                                </td>
-                                <td>
-                                    <ul class="list-inline">
-                                        @foreach(var account in item.Accounts)
-                                        {
-                                        <li class="list-inline-item">
-                                            @account.AccountName
-                                        </li>
-                                        }
-                                    </ul>
-                                </td>
-                                <td>
-                                    @item.ScheduledDate
-                                </td>
-                                <td class="project-state">
-                                    <span class="badge badge-@SetStatusBadge(item.StatusId)">
-                                        @SetStatusValue(item.StatusId)
-                                        </span>
-                                </td>
-                                <td class="project-actions text-right">
-                                    <a class="btn btn-primary btn-sm" href="#">
-                                        <i class="fas fa-folder">
-                                        </i>
-                                        View
-                                    </a>
-                                    <a class="btn btn-info btn-sm" href="#">
-                                        <i class="fas fa-pencil-alt">
-                                        </i>
-                                        Edit
-                                    </a>
-                                    <a class="btn btn-danger btn-sm" href="#">
-                                        <i class="fas fa-trash">
-                                        </i>
-                                        Delete
-                                    </a>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.card-body -->
+                <TableTemplate Items="PostList" Context="item">
+                    <TableHeader>
+                        <th style="width: 1%">
+                            #
+                        </th>
+                        <th style="width: 20%">
+                            Title
+                        </th>
+                        <th style="width: 30%">
+                            Accounts
+                        </th>
+                        <th>
+                            Scheduled Date
+                        </th>
+                        <th style="width: 8%" class="text-center">
+                            Status
+                        </th>
+                        <th style="width: 20%">
+                        </th>
+                    </TableHeader>
+                    <TableBody>
+                        <td>
+                            #
+                        </td>
+                        <td>
+                            <a>
+                                @item.Title
+                            </a>
+                            <br />
+                            <small>
+                                Created @item.CreateDate.Value.ToShortDateString()
+                            </small>
+                        </td>
+                        <td>
+                            <ul class="list-inline">
+                                @foreach (var account in item.Accounts)
+                                {
+                                <li class="list-inline-item">
+                                    @account.AccountName
+                                </li>
+                                }
+                        </ul>
+                    </td>
+                    <td>
+                        @item.ScheduledDate
+                    </td>
+                    <td class="project-state">
+                        <span class="badge badge-@SetStatusBadge(item.StatusId)">
+                            @SetStatusValue(item.StatusId)
+                        </span>
+                    </td>
+                    <td class="project-actions text-right">
+                        <a class="btn btn-primary btn-sm" href="/posts/@item.Id">
+                            <i class="fas fa-folder">
+                            </i>
+                            View
+                        </a>
+                        <a class="btn btn-info btn-sm" href="#">
+                            <i class="fas fa-pencil-alt">
+                            </i>
+                            Edit
+                        </a>
+                        <a class="btn btn-danger btn-sm" href="#">
+                            <i class="fas fa-trash">
+                            </i>
+                            Delete
+                        </a>
+                    </td>
+                </TableBody>
+            </TableTemplate>
+        </div>
+        <!-- /.card-body -->
     </div>
-        <!-- /.card -->
+    <!-- /.card -->
 
 </section>
     <!-- /.content -->
@@ -183,7 +178,7 @@ else
         }
         return result;
     }
-        private string SetStatusBadge(int statusId)
+    private string SetStatusBadge(int statusId)
     {
         string result;
         switch (statusId)

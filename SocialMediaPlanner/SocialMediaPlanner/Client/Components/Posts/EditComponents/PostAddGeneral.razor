@@ -1,0 +1,68 @@
+﻿@using SocialMediaPlanner.Shared.Posts.Commands
+
+<div class="card card-primary">
+    <div class="card-header">
+        <h3 class="card-title">General</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <CustomInputText Id="title" Label="Title" EditMode="@EditMode" @bind-Value="Title"></CustomInputText>
+
+        <label for="body">Body</label>
+        <InputTextArea disabled="@EditMode" id="body" @bind-Value="NewPost.Body" rows="5" placeholder="This is body"  @attributes="@InputAttributes" />
+        <ValidationMessage For="() => NewPost.Body" />
+        <label for="isAdvertised">Is Advertised</label>
+
+        <InputCheckbox disabled="@EditMode" id="isAdvertised" @bind-Value="NewPost.IsAdvertised" />
+        <label for="scheduledDate">Scheduled Date</label>
+
+        <InputDate disabled="@EditMode" id="scheduledDate" @bind-Value="NewPost.ScheduledDate" @attributes="@InputAttributes"/>
+        <label for="DaysForAds">Days For Ads</label>
+
+        <InputNumber disabled="@EditMode" id="DaysForAds" @bind-Value="NewPost.DaysForAds" @attributes="@InputAttributes" />
+
+        <label for="AdsBudget">Ads Budget</label>
+
+        <InputNumber disabled="@EditMode" id="AdsBudget" @bind-Value="NewPost.AdsBudget" @attributes="@InputAttributes" class="form-control form-control-lg" />
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+@code {
+    [Parameter]
+    public AddPostVM NewPost { get; set; }
+
+    private string title;
+
+    [Parameter]
+    public string Title
+    {
+        get => title;
+        set
+        {
+            if (title == value) return;
+            title = value;
+            TitleChanged.InvokeAsync(value);
+        }
+    }
+
+    [Parameter]
+    public EventCallback<string> TitleChanged { get; set; }
+
+    [CascadingParameter(Name="EditMode")]
+    public bool EditMode { get; set; }
+
+    private Dictionary<string, object> InputAttributes { get; set; } =
+    new Dictionary<string, object>()
+        {
+        { "class", "form-control form-control-sm"},
+        { "maxlength", "20"},
+        { "required", "required"}
+        };
+
+}

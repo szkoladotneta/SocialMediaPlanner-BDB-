@@ -1,0 +1,68 @@
+﻿@using SocialMediaPlanner.Shared.Posts.Commands
+
+<div class="card card-secondary">
+    <div class="card-header">
+        <h3 class="card-title">Platforms</h3>
+
+        <div class="card-tools">
+            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <label for="title">Platforms name</label>
+            <InputSelect disabled="@EditMode" id="AccountName" @bind-Value="NewPost.Accounts.AccountName" class="form-control">
+                <option value="" disabled>-----Select Value-----</option>
+                @foreach (var item in Accounts)
+                {
+                    <option value="@item.AccountName">@item.AccountName</option>
+                }
+            </InputSelect>
+
+            <label for="files">Files</label>
+            <InputFile id="files" OnChange="OnChangeInputFile" multiple class="form-control" />
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <input type="button" value="Enter edit mode" class="btn btn-warning" @onclick="ToggleEditMode" />
+            </div>
+        </div>
+    </div>
+    <!-- /.card-body -->
+</div>
+<!-- /.card -->
+@code {
+    private IReadOnlyList<IBrowserFile> files;
+    public List<AccountVm> Accounts { get; set; } = new();
+
+    [Parameter]
+    public AddPostVM NewPost { get; set; }
+
+    public bool EditMode { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> OnEditModeChanged { get; set; }
+
+    protected override void OnInitialized()
+    {
+        NewPost.Accounts = new AccountVm();
+
+        Accounts.Add(new AccountVm() { Id = 1, AccountName = "Facebook" });
+        Accounts.Add(new AccountVm() { Id = 2, AccountName = "Instagram" });
+        Accounts.Add(new AccountVm() { Id = 3, AccountName = "Twitter" });
+    }
+
+    private void OnChangeInputFile(InputFileChangeEventArgs args)
+    {
+        files = args.GetMultipleFiles();
+    }
+
+    private async Task ToggleEditMode()
+    {
+        EditMode = !EditMode;
+        StateHasChanged();
+        await OnEditModeChanged.InvokeAsync(EditMode);
+    }
+}
