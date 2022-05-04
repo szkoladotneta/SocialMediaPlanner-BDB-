@@ -7,7 +7,6 @@ namespace SocialMediaPlanner.Shared.Posts.Commands
     {
 
         public string Title { get; set; }
-        public string ConfirmTitle { get; set; }
         public string Body { get; set; }
 
         public bool IsAdvertised { get; set; }
@@ -22,7 +21,6 @@ namespace SocialMediaPlanner.Shared.Posts.Commands
         public AddPostValidator()
         {
             RuleFor(x => x.Title).NotEmpty();
-            RuleFor(x => x.ConfirmTitle).Equal(x => x.Title);
             RuleFor(x => x.Body).NotEmpty();
             RuleFor(x => x.Body).MinimumLength(10).WithMessage("Body needs to be at least 10 chars");
         }

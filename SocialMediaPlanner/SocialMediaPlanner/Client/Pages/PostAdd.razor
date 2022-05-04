@@ -3,121 +3,59 @@
 @using Blazored.FluentValidation
 @using SocialMediaPlanner.Shared.Posts.Commands
 
-<EditForm Model="@NewPost" OnSubmit="OnSubmitMethod">
-    <FluentValidationValidator />
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Post Add</h1>
+@using SocialMediaPlanner.Client.Components.Posts.EditComponents
+
+<CascadingValue Name="EditMode" Value="@EditMode">
+    <EditForm Model="@NewPost" OnSubmit="OnSubmitMethod">
+        <FluentValidationValidator />
+        <!-- Content Header (Page header) -->
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>Post Add</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="/">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/posts">Posts</a></li>
+                            <li class="breadcrumb-item active">Add</li>
+                        </ol>
+                    </div>
                 </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/">Home</a></li>
-                        <li class="breadcrumb-item"><a href="/posts">Posts</a></li>
-                        <li class="breadcrumb-item active">Add</li>
-                    </ol>
+            </div><!-- /.container-fluid -->
+        </section>
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-md-6">
+                    <PostAddGeneral NewPost="@NewPost" @bind-Title="NewPost.Title" />
+                </div>
+                <div class="col-md-6">
+                    <PostAddPlatforms OnEditModeChanged="EditModeChange" NewPost="@NewPost" />
                 </div>
             </div>
-        </div><!-- /.container-fluid -->
-    </section>
-
-    <!-- Main content -->
-    <section class="content">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card card-primary">
-                    <div class="card-header">
-                        <h3 class="card-title">General</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <CustomInputText Id="title" Label="Title" @bind-Value="NewPost.Title"></CustomInputText>
-                                                <CustomInputText Id="confirmTitle" Label="Confirm Title" @bind-Value="NewPost.ConfirmTitle"></CustomInputText>
-
-                        <label for="body">Body</label>
-
-
-                        <InputTextArea disabled="@EditMode" id="body" @bind-Value="NewPost.Body" rows="5" placeholder="This is body" class="form-control" />
-                        <ValidationMessage For="() => NewPost.Body" />
-                        <label for="isAdvertised">Is Advertised</label>
-
-                        <InputCheckbox disabled="@EditMode" id="isAdvertised" @bind-Value="NewPost.IsAdvertised" />
-                        <label for="scheduledDate">Scheduled Date</label>
-
-                        <InputDate disabled="@EditMode" id="scheduledDate" @bind-Value="NewPost.ScheduledDate" class="form-control" />
-                        <label for="DaysForAds">Days For Ads</label>
-
-                        <InputNumber disabled="@EditMode" id="DaysForAds" @bind-Value="NewPost.DaysForAds" class="form-control" />
-
-                        <label for="AdsBudget">Ads Budget</label>
-
-                        <InputNumber disabled="@EditMode" id="AdsBudget" @bind-Value="NewPost.AdsBudget" class="form-control" />
-                    </div>
-                    <!-- /.card-body -->
+            <div class="row">
+                <div class="col-12">
+                    <a href="#" class="btn btn-secondary">Cancel</a>
+                    <input type="submit" value="Create new Post" class="btn btn-success float-right">
                 </div>
-                <!-- /.card -->
             </div>
-            <div class="col-md-6">
-                <div class="card card-secondary">
-                    <div class="card-header">
-                        <h3 class="card-title">Platforms</h3>
-
-                        <div class="card-tools">
-                            <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                                <i class="fas fa-minus"></i>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <label for="title">Platforms name</label>
-                        <InputSelect disabled="@EditMode" id="AccountName" @bind-Value="NewPost.Accounts.AccountName" class="form-control">
-                            <option value="" disabled>-----Select Value-----</option>
-                            @foreach (var item in Accounts)
-                            {
-                                <option value="@item.AccountName">@item.AccountName</option>
-                            }
-                        </InputSelect>
-
-                        <label for="files">Files</label>
-                        <InputFile id="files" OnChange="OnChangeInputFile" multiple class="form-control"/>
-                    </div>
-                    <!-- /.card-body -->
-                </div>
-                <!-- /.card -->
+            <div style="margin-left:10px;" class="row">
+                Title is: @NewPost.Title <br />
+                Body is: @NewPost.Body
             </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <a href="#" class="btn btn-secondary">Cancel</a>
-                <input type="button" value="Enter edit mode" class="btn btn-warning" @onclick="ToggleEditMode" />
-                <input type="submit" value="Create new Post" class="btn btn-success float-right">
-            </div>
-        </div>
-    </section>
-    <!-- /.content -->
-    <ValidationSummary />
-</EditForm>
+        </section>
+        <!-- /.content -->
+        <ValidationSummary />
+    </EditForm>
+</CascadingValue>
 @code {
     public AddPostVM NewPost { get; set; } = new();
-    public List<AccountVm> Accounts { get; set; } = new();
     public bool EditMode { get; set; } = false;
     private IReadOnlyList<IBrowserFile> files;
 
-    protected override void OnInitialized()
-    {
-        NewPost.Accounts = new AccountVm();
-
-        Accounts.Add(new AccountVm() { Id = 1, AccountName = "Facebook" });
-        Accounts.Add(new AccountVm() { Id = 2, AccountName = "Instagram" });
-        Accounts.Add(new AccountVm() { Id = 3, AccountName = "Twitter" });
-    }
 
     private async Task OnSubmitMethod(EditContext editContext)
     {
@@ -152,14 +90,10 @@
         Console.WriteLine("Textbox has been double clicked!");
     }
 
-    private void ToggleEditMode()
+    private void EditModeChange(bool value)
     {
-        EditMode = !EditMode;
+        EditMode = value;
         StateHasChanged();
     }
 
-    private void OnChangeInputFile(InputFileChangeEventArgs args)
-    {
-        files = args.GetMultipleFiles();
-    }
 }

@@ -1,7 +1,7 @@
 ﻿@inherits InputBase<string>
 <div class="form-group">
     <label for="@Id">@Label</label>
-    <input type="text" id="@Id" @bind="@CurrentValue" class="form-control @CssClass" placeholder="This is title" />
+    <input disabled="@EditMode" type="text" id="@Id" @bind="@CurrentValue" class="form-control @CssClass" placeholder="This is title" />
 </div>
 @code {
     [Parameter]
@@ -9,6 +9,9 @@
 
     [Parameter]
     public string Label { get; set; }
+
+    [Parameter]
+    public bool EditMode { get; set; }
 
     protected override bool TryParseValueFromString(string? value, out string result, 
         out string validationErrorMessage)
