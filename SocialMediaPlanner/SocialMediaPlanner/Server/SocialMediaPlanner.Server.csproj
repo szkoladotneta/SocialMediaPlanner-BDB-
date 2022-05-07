@@ -8,9 +8,19 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="5.0.0" />
+    <PackageReference Include="Serilog.Sinks.Console" Version="4.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SocialMediaPlanner.Application\SocialMediaPlanner.Application.csproj" />
+    <ProjectReference Include="..\..\SocialMediaPlanner.Persistance\SocialMediaPlanner.Persistance.csproj" />
     <ProjectReference Include="..\Client\SocialMediaPlanner.Client.csproj" />
     <ProjectReference Include="..\Shared\SocialMediaPlanner.Shared.csproj" />
   </ItemGroup>

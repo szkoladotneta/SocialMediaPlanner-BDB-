@@ -1,6 +1,8 @@
 ﻿@page "/posts"
 
+@inject HttpClient http;
 @using SocialMediaPlanner.Client.Shared.Templates
+@using SocialMediaPlanner.Shared.Posts.Queries.AllPostsQuery
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
@@ -18,7 +20,7 @@
     </div><!-- /.container-fluid -->
 </section>
 
-@if (PostList == null && !PostList.Any())
+@if (PostList == null || !PostList.Any())
 {
     <p>Loading...</p>
 }
@@ -50,9 +52,6 @@ else
                         <th style="width: 20%">
                             Title
                         </th>
-                        <th style="width: 30%">
-                            Accounts
-                        </th>
                         <th>
                             Scheduled Date
                         </th>
@@ -75,16 +74,6 @@ else
                                 Created @item.CreateDate.Value.ToShortDateString()
                             </small>
                         </td>
-                        <td>
-                            <ul class="list-inline">
-                                @foreach (var account in item.Accounts)
-                                {
-                                <li class="list-inline-item">
-                                    @account.AccountName
-                                </li>
-                                }
-                        </ul>
-                    </td>
                     <td>
                         @item.ScheduledDate
                     </td>
@@ -121,44 +110,12 @@ else
     <!-- /.content -->
 }
 @code {
-    public List<Post> PostList { get; set; }
+    public List<PostForListVm> PostList { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        PostList = new List<Post>();
-        var post1 = new Post()
-            {
-                Id = 1,
-                Title = "First Post",
-                Body = "This is my first post",
-                StatusId = 1,
-                ScheduledDate = DateTime.Now.AddDays(5),
-                CreateDate = DateTime.Now,
-                Accounts = new List<Account>() { new Account() { AccountName = "Facebook", Id = 1 } }
-            };
-        var post2 = new Post()
-            {
-                Id = 2,
-                Title = "Second Post",
-                Body = "This is my second post",
-                StatusId = 2,
-                ScheduledDate = DateTime.Now.AddDays(6),
-                CreateDate = DateTime.Now,
-                Accounts = new List<Account>() { new Account() { AccountName = "Instagram", Id = 2 } }
-            };
-        var post3 = new Post()
-            {
-                Id = 3,
-                Title = "Third Post",
-                Body = "This is my third post",
-                StatusId = 3,
-                ScheduledDate = DateTime.Now.AddDays(7),
-                CreateDate = DateTime.Now,
-                Accounts = new List<Account>() { new Account() { AccountName = "Twitter", Id = 3 } }
-            };
-        PostList.Add(post1);
-        PostList.Add(post2);
-        PostList.Add(post3);
+        PostList = await http.GetFromJsonAsync<List<PostForListVm>>("api/posts");
+        Console.WriteLine(PostList.Count);
     }
 
     private string SetStatusValue(int statusId)
