@@ -1,4 +1,9 @@
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.OpenApi.Models;
+using Serilog;
+using SocialMediaPlanner.Application;
+using SocialMediaPlanner.Persistance;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,6 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddApplication();
+builder.Services.AddPersistance(builder.Configuration);
+
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+builder.Logging.ClearProviders();
+
+var logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+
+builder.Logging.AddSerilog(logger);
 
 var app = builder.Build();
 
