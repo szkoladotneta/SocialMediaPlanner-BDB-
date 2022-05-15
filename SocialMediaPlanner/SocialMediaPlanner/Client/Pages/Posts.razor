@@ -1,6 +1,7 @@
 ﻿@page "/posts"
 
-@inject HttpClient http;
+@inject IApiBroker apiBroker;
+@using SocialMediaPlanner.Client.Brokers.API
 @using SocialMediaPlanner.Client.Shared.Templates
 @using SocialMediaPlanner.Shared.Posts.Queries.AllPostsQuery
 <!-- Content Header (Page header) -->
@@ -114,7 +115,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        PostList = await http.GetFromJsonAsync<List<PostForListVm>>("api/posts");
+        PostList = await apiBroker.GetAllPostsAsync();
         Console.WriteLine(PostList.Count);
     }
 

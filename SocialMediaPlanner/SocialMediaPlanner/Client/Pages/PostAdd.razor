@@ -4,6 +4,8 @@
 @using SocialMediaPlanner.Shared.Posts.Commands
 
 @using SocialMediaPlanner.Client.Components.Posts.EditComponents
+@inject IApiBroker apiBroker;
+@using SocialMediaPlanner.Client.Brokers.API
 
 <CascadingValue Name="EditMode" Value="@EditMode">
     <EditForm Model="@NewPost" OnSubmit="OnSubmitMethod">
@@ -32,9 +34,9 @@
                 <div class="col-md-6">
                     <PostAddGeneral NewPost="@NewPost" @bind-Title="NewPost.Title" />
                 </div>
-                <div class="col-md-6">
+@*                <div class="col-md-6">
                     <PostAddPlatforms OnEditModeChanged="EditModeChange" NewPost="@NewPost" />
-                </div>
+                </div>*@
             </div>
             <div class="row">
                 <div class="col-12">
@@ -61,20 +63,7 @@
     {
         if (editContext.Validate())
         {
-            foreach (var file in files)
-            {
-                Stream stream = file.OpenReadStream();
-                MemoryStream ms = new MemoryStream();
-                await stream.CopyToAsync(ms);
-                stream.Close();
-
-                //Save your file
-
-                Console.WriteLine($"File named: {file.Name} has size of {file.Size}");
-                Console.WriteLine($"Stream has {ms.ToArray().Length} size");
-
-                ms.Close();
-            }
+            await apiBroker.AddPostAsync(NewPost);
             Console.WriteLine("Post has been validated");
         }
         else

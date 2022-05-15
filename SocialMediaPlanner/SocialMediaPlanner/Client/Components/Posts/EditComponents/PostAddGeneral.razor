@@ -16,19 +16,9 @@
         <label for="body">Body</label>
         <InputTextArea disabled="@EditMode" id="body" @bind-Value="NewPost.Body" rows="5" placeholder="This is body"  @attributes="@InputAttributes" />
         <ValidationMessage For="() => NewPost.Body" />
-        <label for="isAdvertised">Is Advertised</label>
-
-        <InputCheckbox disabled="@EditMode" id="isAdvertised" @bind-Value="NewPost.IsAdvertised" />
         <label for="scheduledDate">Scheduled Date</label>
 
         <InputDate disabled="@EditMode" id="scheduledDate" @bind-Value="NewPost.ScheduledDate" @attributes="@InputAttributes"/>
-        <label for="DaysForAds">Days For Ads</label>
-
-        <InputNumber disabled="@EditMode" id="DaysForAds" @bind-Value="NewPost.DaysForAds" @attributes="@InputAttributes" />
-
-        <label for="AdsBudget">Ads Budget</label>
-
-        <InputNumber disabled="@EditMode" id="AdsBudget" @bind-Value="NewPost.AdsBudget" @attributes="@InputAttributes" class="form-control form-control-lg" />
     </div>
     <!-- /.card-body -->
 </div>

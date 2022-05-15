@@ -1,6 +1,6 @@
 ﻿@using SocialMediaPlanner.Shared.Posts.Commands
 
-<div class="card card-secondary">
+@*<div class="card card-secondary">
     <div class="card-header">
         <h3 class="card-title">Platforms</h3>
 
@@ -32,37 +32,37 @@
     </div>
     <!-- /.card-body -->
 </div>
-<!-- /.card -->
+<!-- /.card -->*@
 @code {
-    private IReadOnlyList<IBrowserFile> files;
-    public List<AccountVm> Accounts { get; set; } = new();
+    //private IReadOnlyList<IBrowserFile> files;
+    //public List<AccountVm> Accounts { get; set; } = new();
 
-    [Parameter]
-    public AddPostVM NewPost { get; set; }
+    //[Parameter]
+    //public AddPostVM NewPost { get; set; }
 
-    public bool EditMode { get; set; }
+    //public bool EditMode { get; set; }
 
-    [Parameter]
-    public EventCallback<bool> OnEditModeChanged { get; set; }
+    //[Parameter]
+    //public EventCallback<bool> OnEditModeChanged { get; set; }
 
-    protected override void OnInitialized()
-    {
-        NewPost.Accounts = new AccountVm();
+    //protected override void OnInitialized()
+    //{
+    //    NewPost.Accounts = new AccountVm();
 
-        Accounts.Add(new AccountVm() { Id = 1, AccountName = "Facebook" });
-        Accounts.Add(new AccountVm() { Id = 2, AccountName = "Instagram" });
-        Accounts.Add(new AccountVm() { Id = 3, AccountName = "Twitter" });
-    }
+    //    Accounts.Add(new AccountVm() { Id = 1, AccountName = "Facebook" });
+    //    Accounts.Add(new AccountVm() { Id = 2, AccountName = "Instagram" });
+    //    Accounts.Add(new AccountVm() { Id = 3, AccountName = "Twitter" });
+    //}
 
-    private void OnChangeInputFile(InputFileChangeEventArgs args)
-    {
-        files = args.GetMultipleFiles();
-    }
+    //private void OnChangeInputFile(InputFileChangeEventArgs args)
+    //{
+    //    files = args.GetMultipleFiles();
+    //}
 
-    private async Task ToggleEditMode()
-    {
-        EditMode = !EditMode;
-        StateHasChanged();
-        await OnEditModeChanged.InvokeAsync(EditMode);
-    }
+    //private async Task ToggleEditMode()
+    //{
+    //    EditMode = !EditMode;
+    //    StateHasChanged();
+    //    await OnEditModeChanged.InvokeAsync(EditMode);
+    //}
 }
