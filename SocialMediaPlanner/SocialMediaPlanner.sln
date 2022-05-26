@@ -9,13 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMediaPlanner.Client",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMediaPlanner.Shared", "SocialMediaPlanner\Shared\SocialMediaPlanner.Shared.csproj", "{51C118A4-61E9-452A-8F83-59882120672A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaPlanner.Application", "SocialMediaPlanner.Application\SocialMediaPlanner.Application.csproj", "{BE355E75-E0F9-410B-B50B-E514EF70FAFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMediaPlanner.Application", "SocialMediaPlanner.Application\SocialMediaPlanner.Application.csproj", "{BE355E75-E0F9-410B-B50B-E514EF70FAFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaPlanner.Domain", "SocialMediaPlanner.Domain\SocialMediaPlanner.Domain.csproj", "{67A0D26F-07F1-4104-AAEC-62581E38C1EF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMediaPlanner.Domain", "SocialMediaPlanner.Domain\SocialMediaPlanner.Domain.csproj", "{67A0D26F-07F1-4104-AAEC-62581E38C1EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaPlanner.Persistance", "SocialMediaPlanner.Persistance\SocialMediaPlanner.Persistance.csproj", "{FB147DF5-E90D-4E46-8862-817799547BD8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMediaPlanner.Persistance", "SocialMediaPlanner.Persistance\SocialMediaPlanner.Persistance.csproj", "{FB147DF5-E90D-4E46-8862-817799547BD8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaPlanner.Infrastructure", "SocialMediaPlanner.Infrastructure\SocialMediaPlanner.Infrastructure.csproj", "{552F80FC-6682-4086-B343-E5F49166FCA8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialMediaPlanner.Infrastructure", "SocialMediaPlanner.Infrastructure\SocialMediaPlanner.Infrastructure.csproj", "{552F80FC-6682-4086-B343-E5F49166FCA8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{3E0D6111-1C5E-4E87-A670-C5FED7833D9A}"
 EndProject
