@@ -27,7 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{FAA93542-9940-40D9-98C9-AC2AD69991E0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{1BC783DB-39CF-4E22-A669-69C769384049}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kajetan.Components", "Kajetan.Components\Kajetan.Components.csproj", "{4AE5F41D-A222-4F8F-8654-FEC59B5F0DA1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialMediaPlanner.UITests", "SocialMediaPlanner.UITests\SocialMediaPlanner.UITests.csproj", "{34EE4681-A1DE-472A-9B73-D30178013438}"
 EndProject
