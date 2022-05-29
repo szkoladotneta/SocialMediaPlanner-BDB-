@@ -53,16 +53,21 @@
         <ValidationSummary />
     </EditForm>
 </CascadingValue>
+
+<input id="isSentCheckBox" type="checkbox" @bind="isSent" />
 @code {
     public AddPostVM NewPost { get; set; } = new();
     public bool EditMode { get; set; } = false;
     private IReadOnlyList<IBrowserFile> files;
+    private bool isSent = false;
 
 
     private async Task OnSubmitMethod(EditContext editContext)
     {
+
         if (editContext.Validate())
         {
+            isSent = true;
             await apiBroker.AddPostAsync(NewPost);
             Console.WriteLine("Post has been validated");
         }
