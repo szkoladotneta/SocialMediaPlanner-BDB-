@@ -1,5 +1,54 @@
 ﻿@page "/calendar"
 
 @code {
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        Console.WriteLine("SetParametersAsync-start");
+        await base.SetParametersAsync(parameters);
+        Console.WriteLine("SetParametersAsync-end");
+    }
 
+    protected override void OnInitialized()
+    {
+        Console.WriteLine("OnInitialized-start");
+        base.OnInitialized();
+        Console.WriteLine("OnInitialized-end");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("OnInitializedAsync-start");
+        await base.OnInitializedAsync();
+        Console.WriteLine("OnInitializedAsync-end");
+    }
+
+    protected override void OnParametersSet()
+    {
+        Console.WriteLine("OnParametersSet-start");
+        base.OnParametersSet();
+        StateHasChanged();
+        Console.WriteLine("OnParametersSet-end");
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Console.WriteLine("OnParametersSetAsync-start");
+        
+        await base.OnParametersSetAsync();
+        Console.WriteLine("OnParametersSetAsync-end");
+    }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        Console.WriteLine($"OnAfterRender({firstRender})-start");
+        base.OnAfterRender(firstRender);
+        Console.WriteLine($"OnAfterRender({firstRender})-end");
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        Console.WriteLine($"OnAfterRenderAsync({firstRender})-start");
+        await base.OnAfterRenderAsync(firstRender);
+        Console.WriteLine($"OnAfterRenderAsync({firstRender})-end");
+    }
 }
