@@ -5,6 +5,8 @@
 
 @using SocialMediaPlanner.Client.Components.Posts.EditComponents
 @inject IApiBroker apiBroker;
+@inject IJSRuntime JSRuntime;
+@implements IDisposable
 @using SocialMediaPlanner.Client.Brokers.API
 
 <CascadingValue Name="EditMode" Value="@EditMode">
@@ -34,9 +36,9 @@
                 <div class="col-md-6">
                     <PostAddGeneral NewPost="@NewPost" @bind-Title="NewPost.Title" />
                 </div>
-@*                <div class="col-md-6">
+                <div class="col-md-6">
                     <PostAddPlatforms OnEditModeChanged="EditModeChange" NewPost="@NewPost" />
-                </div>*@
+                </div>
             </div>
             <div class="row">
                 <div class="col-12">
@@ -60,11 +62,17 @@
     public bool EditMode { get; set; } = false;
     private IReadOnlyList<IBrowserFile> files;
     private bool isSent = false;
+    private DotNetObjectReference<PostAdd> ObjectReference;
 
-
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        ObjectReference = DotNetObjectReference.Create(this);
+        var module = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./Pages/PostAdd.razor.js");
+        await module.InvokeVoidAsync("AddTextToTextbox", "This is text from JS", ObjectReference);
+        base.OnAfterRender(firstRender);
+    }
     private async Task OnSubmitMethod(EditContext editContext)
     {
-
         if (editContext.Validate())
         {
             isSent = true;
@@ -76,10 +84,9 @@
             Console.WriteLine("Post has not been validated");
 
         }
-
     }
-
-    private void OnDblClickMethod()
+    [JSInvokable("AddText")]
+    public void OnDblClickMethod()
     {
         Console.WriteLine("Textbox has been double clicked!");
     }
@@ -90,4 +97,11 @@
         StateHasChanged();
     }
 
+    public void Dispose()
+    {
+        if (ObjectReference != null)
+        {
+            ObjectReference.Dispose();
+        }
+    }
 }
