@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Kajetan.Components\Kajetan.Components.csproj" />
     <ProjectReference Include="..\Shared\SocialMediaPlanner.Shared.csproj" />
   </ItemGroup>
 
