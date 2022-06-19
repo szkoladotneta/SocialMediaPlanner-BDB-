@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Json;
+﻿using SocialMediaPlanner.Shared.Auth.Commands.Login;
+using System.Net.Http.Json;
 
 namespace SocialMediaPlanner.Client.Brokers.API
 {
@@ -14,7 +15,7 @@ namespace SocialMediaPlanner.Client.Brokers.API
         private async Task<T> GetAsync<T>(string relativeUrl) =>
             await _httpClient.GetFromJsonAsync<T>(relativeUrl);
 
-        private async Task PostAsync<T>(string relativeUrl, T content) =>
+        private async Task<HttpResponseMessage> PostAsync<T>(string relativeUrl, T content) =>
             await _httpClient.PostAsJsonAsync<T>(relativeUrl, content);
 
     }

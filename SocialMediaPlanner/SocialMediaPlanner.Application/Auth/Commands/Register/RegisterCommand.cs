@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using SocialMediaPlanner.Application.Common.Models;
 using SocialMediaPlanner.Shared.Auth.Commands.Register;
 using System;
@@ -34,7 +34,7 @@ namespace SocialMediaPlanner.Application.Auth.Commands.Register
             {
                 
             }
-            await userManager.AddToRoleAsync(user.Id, "User");
+            await userManager.AddToRoleAsync(user, "User");
 
             return Unit.Value;
         }

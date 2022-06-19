@@ -23,10 +23,11 @@ namespace SocialMediaPlanner.Persistance
         public DbSet<Post> Posts { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
+
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

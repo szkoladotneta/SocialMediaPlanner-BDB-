@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
@@ -17,7 +17,7 @@ using JwtRegisteredClaimNames = Microsoft.IdentityModel.JsonWebTokens.JwtRegiste
 
 namespace SocialMediaPlanner.Application.Auth.Queries.Login
 {
-    public class LoginQuery: IRequest<AuthResponse>
+    public class LoginQuery : IRequest<AuthResponse>
     {
         public LoginUserDto UserDto { get; set; }
     }
@@ -30,7 +30,7 @@ namespace SocialMediaPlanner.Application.Auth.Queries.Login
         public LoginQueryHandler(UserManager<ApiUser> userManager, IConfiguration configuration)
         {
             this.userManager = userManager;
-            this.configuration= configuration;
+            this.configuration = configuration;
         }
         public async Task<AuthResponse> Handle(LoginQuery request, CancellationToken cancellationToken)
         {
@@ -56,33 +56,42 @@ namespace SocialMediaPlanner.Application.Auth.Queries.Login
 
         private async Task<string> GenerateToken(ApiUser user)
         {
-            var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]));
-            var credentials = new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha256);
+            try
+            {
+                var securitykey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSettings:Key"]));
+                var credentials = new SigningCredentials(securitykey, SecurityAlgorithms.HmacSha256);
 
-            var roles = await userManager.GetRolesAsync(user.Id);
-            var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
+                var roles = await userManager.GetRolesAsync(user);
+                var roleClaims = roles.Select(q => new Claim(ClaimTypes.Role, q)).ToList();
 
-            var userClaims = await userManager.GetClaimsAsync(user.Id);
+                var userClaims = await userManager.GetClaimsAsync(user);
 
-            var claims = new List<Claim>
+                var claims = new List<Claim>
             {
                 new Claim(JwtRegisteredClaimNames.Sub, user.UserName),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 new Claim(JwtRegisteredClaimNames.Email, user.Email),
                 new Claim(CustomClaimTypes.Uid, user.Id)
             }
-            .Union(userClaims)
-            .Union(roleClaims);
+                .Union(userClaims)
+                .Union(roleClaims);
 
-            var token = new JwtSecurityToken(
-                issuer: configuration["JwtSettings:Issuer"],
-                audience: configuration["JwtSettings:Audience"],
-                claims: claims,
-                expires: DateTime.UtcNow.AddHours(Convert.ToInt32(configuration["JwtSettings:Duration"])),
-                signingCredentials: credentials
-            );
+                var token = new JwtSecurityToken(
+                    issuer: configuration["JwtSettings:Issuer"],
+                    audience: configuration["JwtSettings:Audience"],
+                    claims: claims,
+                    expires: DateTime.UtcNow.AddHours(Convert.ToInt32(configuration["JwtSettings:Duration"])),
+                    signingCredentials: credentials
+                );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+                return new JwtSecurityTokenHandler().WriteToken(token);
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
     }
 }
