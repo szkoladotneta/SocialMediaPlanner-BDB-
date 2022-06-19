@@ -1,5 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using SocialMediaPlanner.Application.Common.Interfaces;
+using SocialMediaPlanner.Application.Common.Models;
 using SocialMediaPlanner.Domain.Common;
 using SocialMediaPlanner.Domain.Entities;
 using System;
@@ -11,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace SocialMediaPlanner.Persistance
 {
-    public class SocialMediaPlannerDbContext : DbContext, ISocialMediaPlannerDbContext
+    public class SocialMediaPlannerDbContext : IdentityDbContext<ApiUser>, ISocialMediaPlannerDbContext
     {
         public SocialMediaPlannerDbContext(DbContextOptions<SocialMediaPlannerDbContext> options) : base(options)
         {
@@ -21,10 +23,11 @@ namespace SocialMediaPlanner.Persistance
         public DbSet<Post> Posts { get; set; }
         public DbSet<Platform> Platforms { get; set; }
         public DbSet<AccountType> AccountTypes { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            base.OnModelCreating(modelBuilder);
+
         }
 
         public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

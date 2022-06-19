@@ -1,0 +1,77 @@
+﻿@layout EmptyLayout
+@page "/users/login"
+@using SocialMediaPlanner.Client.Service.Authentication
+@using SocialMediaPlanner.Shared.Auth.Commands.Login
+@inject IAuthenticationService authService
+@inject NavigationManager navManager
+
+<div class="login-box">
+    <div class="login-logo">
+        <b>Admin</b>LTE
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+        <div class="card-body login-card-body">
+            <p class="login-box-msg">Sign in to start your session</p>
+            <EditForm Model="LoginModel" OnValidSubmit="HandleLogin">
+
+                <div class="input-group mb-3">
+                    <InputText class="form-control" @bind-Value="LoginModel.Email" placeholder="Email" />
+                    <ValidationMessage For="@(() => LoginModel.Email)" />
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group mb-3">
+                    <InputText class="form-control" type="password" @bind-Value="LoginModel.Password" />
+                    <ValidationMessage For="@(() => LoginModel.Password)" />          <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-8">
+                    </div>
+                    <!-- /.col -->
+                    <div class="col-4">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </EditForm>
+            <p class="mb-0">
+                <a href="/user/register" class="text-center">Register a new membership</a>
+            </p>
+        </div>
+        <!-- /.login-card-body -->
+    </div>
+</div>
+
+<div>
+</div>
+
+@code {
+    LoginUserDto LoginModel = new LoginUserDto();
+    string message = string.Empty;
+    public async Task HandleLogin()
+    {
+        try
+        {
+            var response = await authService.AuthenticateAsync(LoginModel);
+            if (response)
+            {
+                navManager.NavigateTo("/");
+            }
+
+            message = "Invalid Credentials, Please Try Again";
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            message = ex.Message;
+        }
+    }
+}

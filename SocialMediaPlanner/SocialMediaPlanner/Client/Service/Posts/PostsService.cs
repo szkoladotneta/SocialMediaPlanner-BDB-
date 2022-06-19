@@ -1,5 +1,4 @@
-﻿using Microsoft.IdentityModel.SecurityTokenService;
-using SocialMediaPlanner.Client.Brokers.API;
+﻿using SocialMediaPlanner.Client.Brokers.API;
 using SocialMediaPlanner.Shared.Posts.Commands;
 using SocialMediaPlanner.Shared.Posts.Exceptions;
 using SocialMediaPlanner.Shared.Posts.Queries.AllPostsQuery;
@@ -30,7 +29,7 @@ namespace SocialMediaPlanner.Client.Service.Posts
             {
                 await apiBroker.AddPostAsync(post);
             }
-            catch (BadRequestException ex)
+            catch (Exception ex)
             {
 
                 throw new PostBadRequestException(ex);

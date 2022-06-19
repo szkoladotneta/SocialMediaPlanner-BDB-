@@ -1,6 +1,8 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
+using SocialMediaPlanner.Application.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 namespace SocialMediaPlanner.Persistance
 {
     public abstract class DesignTimeDbContextFactoryBase<TContext> :
-            IDesignTimeDbContextFactory<TContext> where TContext : DbContext
+            IDesignTimeDbContextFactory<TContext> where TContext : IdentityDbContext<ApiUser>
     {
         private const string ConnectionStringName = "SocialMediaPlannerDatabase";
         private const string AspNetCoreEnvironment = "ASPNETCORE_ENVIRONMENT";
